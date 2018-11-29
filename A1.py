@@ -6,6 +6,9 @@ import numpy as np
 import plotly
 import plotly.plotly as py
 import plotly.graph_objs as go
+import plotly.plotly as py
+import plotly.tools as tls
+
 
 
 
@@ -136,10 +139,10 @@ cont = 10
 L = []
 L2 = []
 L3 = []
-ArregloTiempoMS=[]
-ArregloTiempoIS=[]
-ArregloTiempoQS=[]
-Ndatos=[]
+ArregloTiempoMS=[]##arreglo de los tiempos de MERGE SORT
+ArregloTiempoIS=[]#arreglo de los tiempos de INSERTION SORT
+ArregloTiempoQS=[]#arreglo de los tiempos de QUICK SORT
+Ndatos=[]#arreglo de los n datos
 
 while cont <= 200:
     for i in range (0, cont):
@@ -177,14 +180,36 @@ while cont <= 200:
     cont+=10
 
 
-dataMS = [go.Scatter(x=Ndatos ,y=ArregloTiempoMS)]
-dataIS=[go.Scatter(x=Ndatos ,y=ArregloTiempoIS)]
-data=[]
-data.append(dataMS)
-data.append(dataIS)
-py.plot(data, filename='Grafico del MergeSort')
 
 
+plt.figure()
+#son los 3 ordenamientos
+plt.plot(Ndatos, ArregloTiempoMS, '-')
+plt.plot(Ndatos, ArregloTiempoIS, '-')
+plt.plot(Ndatos, ArregloTiempoQS, '-')
+
+
+plt.title("Grafico de los metodos de ordenamiento: MergeSort, InsertionSort, QuickSort")
+
+fig = plt.gcf()
+#fig.set_size_inches(200,120,True)
+plotly_fig = tls.mpl_to_plotly( fig )
+
+plotly_fig["data"][0]["error_y"].update({
+                                         "visible": True,
+                                         "color":"rgb(255,127,14)",
+                                         "value":0.04,
+                                         "type":"constant"
+                                       })
+plotly_fig["data"][0]["error_x"].update({
+                                         "visible": True,
+                                         "color":"rgb(255,127,14)",
+                                         "value":0.04,
+                                         "type":"constant"
+                                       })
+
+
+py.plot(plotly_fig, filename='Graficos Tiempo vs datos')
 
 
 workbook.close()
