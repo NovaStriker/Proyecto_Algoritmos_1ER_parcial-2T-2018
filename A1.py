@@ -27,15 +27,20 @@ def insertionSort(alist):
 
 #---------------------------------------------------------------------mergeSort------------------------------------------------------------------------
 def mergeSort(alist):
+
     if len(alist)>1:
+
+        #Dividir la lista formando sublistas
         mid = len(alist)//2
         lefthalf = alist[:mid]
         righthalf = alist[mid:]
+        #Ordena cada una de las sublistas
         mergeSort(lefthalf)
         mergeSort(righthalf)
         i=0
         j=0
         k=0
+        #Intercala de forma ordenada las sublistas
         while i < len(lefthalf) and j < len(righthalf):
             if lefthalf[i] < righthalf[j]:
                 alist[k]=lefthalf[i]
