@@ -3,6 +3,80 @@ import time
 import os.path
 from pathlib import Path
 
+
+def insertionSort(alist):   #definir la funcion del algoritmo que reciba una lista
+   for index in range(1,len(alist)): #recorrer la lista
+     currentvalue = alist[index] #valor que va tomando index
+     position = index
+     while position > 0 and alist[position-1] > currentvalue: #comparacion y validacion de la posicion con el indice
+         alist[position] = alist[position-1]
+         position = position-1
+     alist[position] = currentvalue
+
+
+
+
+def mergeSort(alist):
+    if len(alist)>1:
+        mid = len(alist)//2
+        lefthalf = alist[:mid]
+        righthalf = alist[mid:]
+        mergeSort(lefthalf)
+        mergeSort(righthalf)
+        i=0
+        j=0
+        k=0
+        while i < len(lefthalf) and j < len(righthalf):
+            if lefthalf[i] < righthalf[j]:
+                alist[k]=lefthalf[i]
+                i=i+1
+            else:
+                alist[k]=righthalf[j]
+                j=j+1
+            k=k+1
+        while i < len(lefthalf):
+            alist[k]=lefthalf[i]
+            i=i+1
+            k=k+1
+
+        while j < len(righthalf):
+            alist[k]=righthalf[j]
+            j=j+1
+            k=k+1
+
+
+def quickSort(alist):
+   quickSortHelper(alist,0,len(alist)-1)
+
+def quickSortHelper(alist,first,last):
+   if first<last:
+       splitpoint = partition(alist,first,last)
+       quickSortHelper(alist,first,splitpoint-1)
+       quickSortHelper(alist,splitpoint+1,last)
+
+def partition(alist,first,last):
+   pivotvalue = alist[first]
+   leftmark = first+1
+   rightmark = last
+
+   done = False
+   while not done:
+       while leftmark <= rightmark and alist[leftmark] <= pivotvalue:
+           leftmark = leftmark + 1
+       while alist[rightmark] >= pivotvalue and rightmark >= leftmark:
+           rightmark = rightmark -1
+       if rightmark < leftmark:
+           done = True
+       else:
+           temp = alist[leftmark]
+           alist[leftmark] = alist[rightmark]
+           alist[rightmark] = temp
+   temp = alist[first]
+   alist[first] = alist[rightmark]
+   alist[rightmark] = temp
+   return rightmark
+
+
 salir = False
 
 while (salir==False):
@@ -66,28 +140,86 @@ while (salir==False):
                     print("Insertion Sort vs Merge Sort")
                     arregloA = arregloAnalisis
                     arregloB = arregloAnalisis
-                    #---------------- Insertar Algoritmos ----------------
-                    #---------------- Insertar Algoritmos ----------------
+                    insertionSort(arregloA)
+                    mergeSort(arregloB)
+
                 elif (opcionComparacion == "2"):
                     print("Insertion Sort vs Quick Sort")
                     arregloA = arregloAnalisis
                     arregloB = arregloAnalisis
-                    #---------------- Insertar Algoritmos ----------------
-                    #---------------- Insertar Algoritmos ----------------
+                    insertionSort(arregloA)
+                    quickSort(arregloB)
+
                 elif (opcionComparacion == "3"):
                     print("Merge Sort vs Quick Sort")
                     arregloA = arregloAnalisis
                     arregloB = arregloAnalisis
-                    #---------------- Insertar Algoritmos ----------------
-                    #---------------- Insertar Algoritmos ----------------
+                    mergeSort(arregloA)
+                    quickSort(arregloB)
+
+
+
                 elif (opcionComparacion == "4"):
                     print("Comparar todos los algoritmos")
                     arregloA = arregloAnalisis
                     arregloB = arregloAnalisis
                     arregloC = arregloAnalisis
-                    #---------------- Insertar Algoritmos ----------------
-                    #---------------- Insertar Algoritmos ----------------
-                elif (opcionComparacion == "5"):
+                    insertionSort(arregloA)
+                    mergeSort(arregloB)
+                    quickSort(arregloC)
+
+                    ArregloTiempoMS.append(endtime)  # agregando tiempos  al arreglo de MergeSort
+
+                    start_time = time.time()
+                    insertionSort(L2)
+                    endtime = time.time() - start_time
+                    print("Insertion sort para " + str(len(L2)) + ": --- %s seconds ---" % "{0:.22f}".format(endtime))
+                    worksheet.write(j, 2, endtime)
+                    ArregloTiempoIS.append(endtime)  # agregando tiempos al arreglo de InsertionSort
+
+                    L3 = L2.copy()
+                    start_time = time.time()
+                    quickSort(L3)
+                    endtime = time.time() - start_time
+                    print("Quick sort para " + str(len(L3)) + ": --- %s seconds ---" % "{0:.22f}".format(endtime))
+                    worksheet.write(j, 3, endtime)
+                    ArregloTiempoQS.append(endtime)  # agregando tiempos al arreglo de Quickort
+
+                    L = []
+                    Ndatos.append(cont)
+                    cont += 10
+
+            plt.figure()
+            # son los 3 ordenamientos
+            plt.plot(Ndatos, ArregloTiempoMS, '-')
+            plt.plot(Ndatos, ArregloTiempoIS, '-')
+            plt.plot(Ndatos, ArregloTiempoQS, '-')
+
+            plt.title("Grafico de los metodos de ordenamiento: MergeSort, InsertionSort, QuickSort")
+
+            fig = plt.gcf()
+            # fig.set_size_inches(200,120,True)
+            plotly_fig = tls.mpl_to_plotly(fig)
+
+            plotly_fig["data"][0]["error_y"].update({
+                "visible": True,
+                "color": "rgb(255,127,14)",
+                "value": 0.04,
+                "type": "constant"
+            })
+            plotly_fig["data"][0]["error_x"].update({
+                "visible": True,
+                "color": "rgb(255,127,14)",
+                "value": 0.04,
+                "type": "constant"
+            })
+
+            py.plot(plotly_fig, filename='Graficos Tiempo vs datos')
+
+
+
+
+        elif (opcionComparacion == "5"):
                     print("Volviendo al menú principal...")
                     salirDeAnalisis = True
                 else:
