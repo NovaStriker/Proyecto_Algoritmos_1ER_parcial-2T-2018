@@ -3,13 +3,9 @@ from random import randint
 import xlsxwriter
 import matplotlib.pyplot as plt
 import numpy as np
-
-#ejemplo de grafico
-x = np.linspace(0,10,9)
-y = np.random.rand(9)
-
-plt.scatter(x,y)
-plt.show()
+import plotly
+import plotly.plotly as py
+import plotly.graph_objs as go
 
 
 
@@ -132,13 +128,19 @@ worksheet.write(4, 2, "Insertion Sort")
 worksheet.write(4, 3, "Quick Sort")
 worksheet.write(4, 4, "Stooge Sort")
 
-
+#inciando sesion en plotly
+plotly.tools.set_credentials_file(username='esperanza.96', api_key='dgaQmgksjeqSqPZ1kXRG')
 
 j = 4
 cont = 10
 L = []
 L2 = []
 L3 = []
+ArregloTiempoMS=[]
+ArregloTiempoIS=[]
+ArregloTiempoQS=[]
+Ndatos=[]
+
 while cont <= 200:
     for i in range (0, cont):
         L.append(randint(0,500))
@@ -151,11 +153,15 @@ while cont <= 200:
     j += 1
     worksheet.write(j, 0, str(len(L)))
     worksheet.write(j, 1, endtime)
+    ArregloTiempoMS.append(endtime)#agregando tiempos  al arreglo de MergeSort
+
+
     start_time = time.time()
     insertionSort(L2)
     endtime = time.time() - start_time
     print("Insertion sort para " + str(len(L2)) + ": --- %s seconds ---"%"{0:.22f}".format(endtime))
     worksheet.write(j, 2, endtime)
+    ArregloTiempoIS.append(endtime)#agregando tiempos al arreglo de InsertionSort
 
     L3 = L2.copy()
     start_time = time.time()
@@ -163,8 +169,22 @@ while cont <= 200:
     endtime = time.time() - start_time
     print("Quick sort para " + str(len(L3)) + ": --- %s seconds ---" % "{0:.22f}".format(endtime))
     worksheet.write(j, 3, endtime)
+    ArregloTiempoQS.append(endtime)#agregando tiempos al arreglo de Quickort
 
 
     L = []
+    Ndatos.append(cont)
     cont+=10
+
+
+dataMS = [go.Scatter(x=Ndatos ,y=ArregloTiempoMS)]
+dataIS=[go.Scatter(x=Ndatos ,y=ArregloTiempoIS)]
+data=[]
+data.append(dataMS)
+data.append(dataIS)
+py.plot(data, filename='Grafico del MergeSort')
+
+
+
+
 workbook.close()
