@@ -66,27 +66,27 @@ while (salir==False):
                     print("Insertion Sort vs Merge Sort")
                     arregloA = arregloAnalisis
                     arregloB = arregloAnalisis
-                    #---------------- Insertar Arreglos ----------------
-                    #---------------- Insertar Arreglos ----------------
+                    #---------------- Insertar Algoritmos ----------------
+                    #---------------- Insertar Algoritmos ----------------
                 elif (opcionComparacion == "2"):
                     print("Insertion Sort vs Quick Sort")
                     arregloA = arregloAnalisis
                     arregloB = arregloAnalisis
-                    #---------------- Insertar Arreglos ----------------
-                    #---------------- Insertar Arreglos ----------------
+                    #---------------- Insertar Algoritmos ----------------
+                    #---------------- Insertar Algoritmos ----------------
                 elif (opcionComparacion == "3"):
                     print("Merge Sort vs Quick Sort")
                     arregloA = arregloAnalisis
                     arregloB = arregloAnalisis
-                    #---------------- Insertar Arreglos ----------------
-                    #---------------- Insertar Arreglos ----------------
+                    #---------------- Insertar Algoritmos ----------------
+                    #---------------- Insertar Algoritmos ----------------
                 elif (opcionComparacion == "4"):
                     print("Comparar todos los algoritmos")
                     arregloA = arregloAnalisis
                     arregloB = arregloAnalisis
                     arregloC = arregloAnalisis
-                    #---------------- Insertar Arreglos ----------------
-                    #---------------- Insertar Arreglos ----------------
+                    #---------------- Insertar Algoritmos ----------------
+                    #---------------- Insertar Algoritmos ----------------
                 elif (opcionComparacion == "5"):
                     print("Volviendo al menú principal...")
                     salirDeAnalisis = True
